@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[293]:
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,19 +8,12 @@ from pandas.tools.plotting import scatter_matrix
 import math
 import itertools
 
-
-# In[238]:
-
-
 def read_data(data):
     # Reading .txt file into csv dataframe
     df = pd.read_csv(data, header = None)
     return df
 
-
-# In[239]:
-
-
+	
 def visualize_data(x,y):
     # Plotting points as a scatter plot 
     plt.scatter(x, y, label= "stars", color= "green", marker= "*", s=30) 
@@ -35,17 +25,11 @@ def visualize_data(x,y):
     # Function to show the plot 
     plt.show() 
 
-
-# In[240]:
-
-
+	
 def feature_normalization(df,mean,std):
     # Need normalization when many features are there, so that all the features are on similar scale
     norm_df = (df-mean)/std
     return norm_df
-
-
-# In[241]:
 
 
 def get_initial_values(df):
@@ -68,9 +52,6 @@ def get_initial_values(df):
     return x,y,theta
 
 
-# In[242]:
-
-
 def compute_cost(x,y,theta):
     # hypothesis = [[sum(a*b for a,b in zip(X_row,Y_col)) for Y_col in zip(*theta)] for X_row in x]
     # Hypothesis = theta(0)*x0 + theta(1)*x1 + ... + theta(n)*xn or (transpose of theta) * x
@@ -82,29 +63,19 @@ def compute_cost(x,y,theta):
     print(cost)
 
 
-# In[303]:
-
-
 def gradient_descent(x,y,theta):
     # In gradient descent we will update the value of theta so that cost will minimize
     # theta = theta - alpha * (1/m * loss * x)
-    theta_list = []
-    cost_list = []
     iterations = 1500
     alpha = 0.01
     for iteration in range(iterations):  
         hypothesis = [np.dot(x[i].transpose(),theta) for i in range(len(x))]
-        theta_list.append(theta)
         loss = [hypothesis[i] - y[i] for i in range(len(x))]
         cost = (sum([math.pow(loss[i],2) for i in range(len(x))]))/(2*len(x))
-        cost_list.append(cost)
         gradient = np.dot(x.transpose(),loss)/len(x)
         theta = theta - alpha * gradient
     print("cost:%s and theta:%s" %(cost,theta))
     return theta
-
-
-# In[253]:
 
 
 def prediction_data(data,mean,std):
@@ -120,16 +91,10 @@ def prediction_data(data,mean,std):
     return np.array(df)
 
 
-# In[259]:
-
-
 def prediction(feature_array,theta):
     predicted_value = np.dot(feature_array.transpose(),theta)
     print("predicted value for features %s:%s" %(feature_array[1:len(feature_array)],predicted_value))
     return predicted_value
-
-
-# In[304]:
 
 
 def main():
